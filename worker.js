@@ -6,7 +6,7 @@ const config = {
   custom_link: true, // Allow users to customize the short url.
   overwrite_kv: false, // Allow user to overwrite an existed key.
   snapchat_mode: false, // The link will be distroyed after access.
-  visit_count: false, // Count visit times.
+  visit_count: true, // Count visit times.
   load_kv: false, // Load all from Cloudflare KV
   system_type: "shorturl", // shorturl, imghost, other types {pastebin, journal}
 }
@@ -24,7 +24,6 @@ const html404 = `<!DOCTYPE html>
   <body>
     <h1>404 Not Found.</h1>
     <p>The url you visit is not found.</p>
-    <p> <a href="https://github.com/crazypeace/Url-Shorten-Worker/" target="_self">Fork me on GitHub</a> </p>
   </body>
   </html>`
 
@@ -294,7 +293,7 @@ async function handleRequest(request) {
   // 如果path为空, 即直接访问本worker
   // If visit this worker directly (no path)
   if (!path) {
-    return Response.redirect("https://zelikk.blogspot.com/search/label/Url-Shorten-Worker", 302)
+    return Response.redirect("https://github.com/ntanthedev", 302)
     /* new Response(html404, {
       headers: response_header,
       status: 404
@@ -314,7 +313,6 @@ async function handleRequest(request) {
     })
   }
 
-  // 在KV中查询 短链接 对应的原链接
   // Query the value(long url) in KV by key(short url)
   let value = await LINKS.get(path);
   // console.log(value)
